@@ -21,8 +21,21 @@ Don't forget to include a newline (`\n`) after each log message!
 
 ## Testing
 
-You can test this as an E2E system. Start the server (`server.listen(port)`) in the `before` and 
+It's fine to just test this as an E2E system. Start the server (`server.listen(port)`) in the `before` and 
 close it (`server.close()`) in an `after`.
+
+You can optionally create a `Logger` class that looks like:
+
+```js
+class Logger {
+    constructor(logfile) { /*...*/ }
+    log(message) { /*...*/ }
+}
+```
+
+And test this class first, then write a simple E2E test that makes sure everything works together.
+
+In either case:
 
 Write a test that creates two clients and has each one write a messages to the log. You can directly inspect 
 the log files to test that log messages are being written. You'll need to parse (split) the file on new line, and then 
