@@ -1,7 +1,6 @@
 const server = require('../lib/app');
 const net = require('net');
 const assert = require('assert');
-const logger = require('./server-log');
 const fs = require('fs');
 
 describe('Server Logging', () => {
@@ -43,17 +42,19 @@ describe('Server Logging', () => {
         client1.write(message1);
         client2.write(message2);
 
-        const logFile = fs.readFile(logger, (err) => {
+        const logFile = fs.readFile('./server-log.txt', 'utf8', (err, data) => {
             if (err) throw err;
+            return data;
         });
 
-        console.log(logFile);
+        console.log('Log File: ', logFile);
 
         // TODO: Read server-log.txt and verify that the message logged is the message sent
         // * Split the file on line breaks (/n)
         // * Split each line on ** to separate message from log time
         // * Check the final split results against message1 and message2
 
+        done();
     });
 
 });
