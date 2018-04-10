@@ -1,6 +1,6 @@
 const server = require('../lib/app');
 const net = require('net');
-const assert = require('assert');
+// const assert = require('assert');
 const fs = require('fs');
 
 describe('Server Logging', () => {
@@ -11,6 +11,7 @@ describe('Server Logging', () => {
     });
 
     let client1 = null;
+    const message1 = 'Is this thing on?';
     beforeEach(done => {
         client1 = net.connect(PORT, () => {
             client1.setEncoding('utf8');
@@ -19,6 +20,7 @@ describe('Server Logging', () => {
     });
 
     let client2 = null;
+    const message2 = 'It sure is!';
     beforeEach(done => {
         client2 = net.connect(PORT, () => {
             client2.setEncoding('utf8');
@@ -36,9 +38,6 @@ describe('Server Logging', () => {
     });
 
     it('Client message is logged to server-log.txt', done => {
-        const message1 = 'Is this thing on?';
-        const message2 = 'It sure is!';
-
         client1.write(message1);
         client2.write(message2);
 
@@ -47,12 +46,18 @@ describe('Server Logging', () => {
             return data;
         });
 
-        // TODO: Read server-log.txt and verify that the message logged is the message sent
-        // * Split the file on line breaks (/n)
-        // * Split each line on ** to separate message from log time
-        // * Check the final split results against message1 and message2
+        console.log('logFile: ', logFile);
+
+        // const firstSplit = logFile.split('\n');
+        // const firstMessage = firstSplit[0].split(' ** ');
+        // const secondMessage = firstSplit[1].split(' ** ');
+
+        // assert.deepEqual(firstMessage[1], message1);
+        // assert.deepEqual(secondMessage[1], message2);
+
+        // const d = new Date(firstMessage[0]);
+        // isNaN(d.getTime());
 
         done();
     });
-
 });
