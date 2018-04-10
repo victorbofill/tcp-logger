@@ -1,36 +1,59 @@
 const server = require('../lib/app');
 const net = require('net');
 const assert = require('assert');
+const logger = require('./server-log');
+const fs = require('fs');
 
 describe('Server Logging', () => {
     const PORT = 15677;
 
     beforeEach(done => {
-        app.listen(PORT, done);
+        server.listen(PORT, done);
     });
 
-    let client = null;
+    let client1 = null;
     beforeEach(done => {
-        client = net.connect(PORT, () => {
-            client.setEncoding('utf8');
+        client1 = net.connect(PORT, () => {
+            client1.setEncoding('utf8');
+            done();
+        });
+    });
+
+    let client2 = null;
+    beforeEach(done => {
+        client2 = net.connect(PORT, () => {
+            client2.setEncoding('utf8');
             done();
         });
     });
 
     afterEach(() => {
-        app.close();
+        server.close();
     });
 
     afterEach(() => {
-        client.destroy();
+        client1.destroy();
+        client2.destroy();
     });
 
     it('Client message is logged to server-log.txt', done => {
+        const message1 = 'Is this thing on?';
+        const message2 = 'It sure is!';
 
-        // This code will read server-log.txt and verify that the message logged is the message sent
+        client1.write(message1);
+        client2.write(message2);
+
+        const logFile = fs.readFile(logger, (err) => {
+            if (err) throw err;
+        });
+
+        console.log(logFile);
+
+        // TODO: Read server-log.txt and verify that the message logged is the message sent
+        // * Split the file on line breaks (/n)
+        // * Split each line on ** to separate message from log time
+        // * Check the final split results against message1 and message2
 
     });
 
 });
-
-// This code will test whether a message is logged to server-log.txt
