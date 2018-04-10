@@ -1,6 +1,6 @@
 const server = require('../lib/app');
 const net = require('net');
-// const assert = require('assert');
+const assert = require('assert');
 const fs = require('fs');
 
 describe('Server Logging', () => {
@@ -37,26 +37,30 @@ describe('Server Logging', () => {
         client2.destroy();
     });
 
+    let logFile;
+
     it('Client message is logged to server-log.txt', done => {
         client1.write(message1);
         client2.write(message2);
 
-        const logFile = fs.readFile('./test/server-log.txt', 'utf8', (err, data) => {
-            if (err) throw err;
-            return data;
-        });
+        setTimeout(() => {
+            fs.readFile('./test/server-log.txt', 'utf8', (err, data) => {
+                if (err) throw err;
+                logFile = data;
+            });
+        }, 30);
+    
+        setTimeout(() => {
+            const firstSplit = logFile.split('\n');
+            const firstMessage = firstSplit[0].split(' ** ');
+            const secondMessage = firstSplit[1].split(' ** ');
+    
+            assert.deepEqual(firstMessage[1], message1);
+            assert.deepEqual(secondMessage[1], message2);
 
-        console.log('logFile: ', logFile);
-
-        // const firstSplit = logFile.split('\n');
-        // const firstMessage = firstSplit[0].split(' ** ');
-        // const secondMessage = firstSplit[1].split(' ** ');
-
-        // assert.deepEqual(firstMessage[1], message1);
-        // assert.deepEqual(secondMessage[1], message2);
-
-        // const d = new Date(firstMessage[0]);
-        // isNaN(d.getTime());
+            const d = new Date(firstMessage[0]);
+            isNaN(d.getTime());
+        }, 50);
 
         done();
     });
