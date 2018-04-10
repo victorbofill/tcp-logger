@@ -1,4 +1,4 @@
-# Project Name
+# TCP Logger
 
 ## Overview
-A brief description of the project
+A minimal TCP server to test TCP logging functionality
