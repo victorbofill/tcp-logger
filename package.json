@@ -1,0 +1,28 @@
+{
+  "name": "tcp-logger",
+  "version": "1.0.0",
+  "description": "A minimal TCP logger and testing",
+  "main": "server.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victorbofill/tcp-logger.git"
+  },
+  "author": "Victor Bofill <victorm.bofill@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/victorbofill/tcp-logger/issues"
+  },
+  "homepage": "https://github.com/victorbofill/tcp-logger#readme",
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "mocha": "^5.0.5"
+  }
+}
