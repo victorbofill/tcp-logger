@@ -42,12 +42,10 @@ describe('Server Logging', () => {
         client1.write(message1);
         client2.write(message2);
 
-        const logFile = fs.readFile('./server-log.txt', 'utf8', (err, data) => {
+        const logFile = fs.readFile('./test/server-log.txt', 'utf8', (err, data) => {
             if (err) throw err;
             return data;
         });
-
-        console.log('Log File: ', logFile);
 
         // TODO: Read server-log.txt and verify that the message logged is the message sent
         // * Split the file on line breaks (/n)
