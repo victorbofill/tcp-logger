@@ -80,7 +80,8 @@ describe('Server Logging', () => {
     it('Time is correctly logged', done => {
         setTimeout(() => {
             const d = new Date(firstMessage[0]);
-            isNaN(d.getTime());
+            const testDate = new Date();
+            assert.equal((isNaN(d.getTime())), false);
         }, 80);
         done();
     });
